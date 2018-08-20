@@ -1,0 +1,21 @@
+image: node:6.9.3
+before_script:
+  - apt-get --quiet update --yes
+  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
+#  install node js
+  - apt-get --quiet install -y build-essential
+  - curl -sL http://deb.nodesource.com/setup_6.x | bash -
+  - apt-get --quiet install -y nodejs
+  - apt-get --quiet update --yes
+  - apt-get install sshpass
+  - apt-get install openssh-client
+stages:
+  - deploy
+#deploy debug
+publicar_productivo:
+  stage: deploy
+  script:
+    - sshpass -p '(vOPvziCB08x' ssh -o StrictHostKeyChecking=no root@185.144.156.237 'cd ../var/www/back/node-express-mongo-crud && git pull origin master'
+    - sshpass -p '(vOPvziCB08x' ssh -o StrictHostKeyChecking=no root@185.144.156.237 'sudo nginx -t && sudo systemctl restart nginx'
+  only:
+    - master
