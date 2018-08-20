@@ -7,7 +7,7 @@ const auth = require('../middlewares/auth');
 
 const userCtrl = require('../controller/user');
 
-router.get('/', async (req, res)=> {
+router.get('/', async(req, res)=> {
     const tasks = await Task.find();
     res.render('index',{
         tasks
